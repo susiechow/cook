@@ -102,22 +102,28 @@ export function dishArt(dish, ids) {
   const type = dish.type;
 
   let body = '';
+  let baseY = 112;
   if (type === '冰品') {
     body = iceGlass('M124 112 L131 212 Q133 226 148 226 H212 Q227 226 229 212 L236 112 Z');
+    baseY = 122;
   } else if (type === '甜品') {
     body = cup('M118 94 Q180 186 242 94 Z');
+    baseY = 84;
   } else if (type === '烘焙') {
     body = ramekin('');
+    baseY = 134;
   } else if (type === '黑暗料理' || type === '创意') {
     body = flask('M150 128 L124 200 Q120 214 136 214 H224 Q240 214 236 200 L210 128 Z');
+    baseY = 150;
   } else {
     body = glass('M124 100 L131 212 Q133 226 148 226 H212 Q227 226 229 212 L236 100 Z');
+    baseY = 106;
   }
 
   const positions = [
-    [152, 118, 17],
-    [188, 104, 14],
-    [214, 132, 16]
+    [148, baseY, 18],
+    [182, baseY - 14, 15],
+    [212, baseY + 8, 17]
   ];
 
   const fruits = ids
@@ -128,7 +134,7 @@ export function dishArt(dish, ids) {
     })
     .join('');
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 280" width="360" height="280">
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="34 26 292 218" width="360" height="270">
   <defs>
     <linearGradient id="liquid" x1="0" y1="0" x2="0.7" y2="1">
       <stop offset="0" stop-color="${main[0]}"/>

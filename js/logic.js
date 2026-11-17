@@ -32,12 +32,12 @@ export function matchDish(ids) {
   const names = ids.map((id) => (FRUITS[id] ? FRUITS[id].name : id));
   if (ids.length >= 3) {
     return {
-      dish: { ...FALLBACKS.bake, name: `${names.join('·')} ${FALLBACKS.bake.name}` },
+      dish: { ...FALLBACKS.bake, name: `${names.join('·')} 暗夜果园烤盅` },
       isFallback: true
     };
   }
   return {
-    dish: { ...FALLBACKS.drink, name: `${names.join('·')} ${FALLBACKS.drink.name}` },
+    dish: { ...FALLBACKS.drink, name: `${names.join('·')} 月光实验特调` },
     isFallback: true
   };
 }

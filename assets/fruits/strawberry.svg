@@ -9,14 +9,8 @@
       <stop offset="0" stop-color="#a9c48f"/>
       <stop offset="1" stop-color="#6f8a5f"/>
     </linearGradient>
-    <filter id="g">
-      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" result="n"/>
-      <feColorMatrix in="n" type="saturate" values="0"/>
-      <feComponentTransfer><feFuncA type="linear" slope="0.06"/></feComponentTransfer>
-    </filter>
   </defs>
-  <path d="M60 26c-14-10-29 2-26 22 3 22 16 43 26 52 10-9 23-30 26-52 3-20-12-32-26-22Z"
-        fill="url(#s)" stroke="#7d3535" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M60 26c-14-10-29 2-26 22 3 22 16 43 26 52 10-9 23-30 26-52 3-20-12-32-26-22Z" fill="url(#s)" stroke="#7d3535" stroke-width="3" stroke-linejoin="round"/>
   <g fill="#f7e1a0">
     <ellipse cx="48" cy="50" rx="2" ry="3" transform="rotate(-16 48 50)"/>
     <ellipse cx="62" cy="46" rx="2" ry="3" transform="rotate(10 62 46)"/>
@@ -26,8 +20,6 @@
     <ellipse cx="70" cy="74" rx="2" ry="3" transform="rotate(14 70 74)"/>
     <ellipse cx="53" cy="82" rx="2" ry="3" transform="rotate(-8 53 82)"/>
   </g>
-  <path d="M60 34c-8-2-13-8-13-14 6 0 11 3 13 8 2-5 7-8 13-8 0 6-5 12-13 14Z"
-        fill="url(#l)" stroke="#4f6642" stroke-width="2.6" stroke-linejoin="round"/>
+  <path d="M60 34c-8-2-13-8-13-14 6 0 11 3 13 8 2-5 7-8 13-8 0 6-5 12-13 14Z" fill="url(#l)" stroke="#4f6642" stroke-width="2.6" stroke-linejoin="round"/>
   <path d="M59 15c1-6 4-9 8-10 0 5-2 9-8 10Z" fill="#8aa874" stroke="#4f6642" stroke-width="2"/>
-  <path d="M60 26c-14-10-29 2-26 22 3 22 16 43 26 52 10-9 23-30 26-52 3-20-12-32-26-22Z" fill="#6b2c2c" opacity="0.15" filter="url(#g)"/>
 </svg>

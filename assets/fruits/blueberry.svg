@@ -20,5 +20,4 @@
     <ellipse cx="52" cy="38" rx="5" ry="3.4" transform="rotate(-24 52 38)"/>
     <ellipse cx="36" cy="62" rx="4" ry="2.8" transform="rotate(-18 36 62)"/>
   </g>
-  <path d="M40 48c-6-8-6-14-4-18 6 4 8 10 4 18Z" fill="#a9c48f" stroke="#5d7448" stroke-width="2.3" stroke-linejoin="round"/>
 </svg>

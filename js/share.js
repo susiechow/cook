@@ -1,3 +1,5 @@
+import { dishArt } from './dishart.js';
+
 const CARD_W = 1080;
 const CARD_H = 1350;
 const SERIF = '"Noto Serif SC", "Songti SC", "STSong", serif';
@@ -27,17 +29,11 @@ async function tryLoadImage(src) {
 
 function drawSoftPlaceholder(ctx, x, y, w, h) {
   const grad = ctx.createRadialGradient(x + w * 0.4, y + h * 0.38, 0, x + w * 0.4, y + h * 0.38, w * 0.7);
-  grad.addColorStop(0, 'rgba(147, 169, 141, 0.5)');
-  grad.addColorStop(0.55, 'rgba(240, 183, 160, 0.38)');
+  grad.addColorStop(0, 'rgba(147, 169, 141, 0.45)');
+  grad.addColorStop(0.55, 'rgba(240, 183, 160, 0.32)');
   grad.addColorStop(1, 'rgba(251, 246, 236, 0)');
   ctx.fillStyle = grad;
   ctx.fillRect(x, y, w, h);
-
-  ctx.strokeStyle = 'rgba(91, 86, 76, 0.22)';
-  ctx.lineWidth = 3;
-  ctx.beginPath();
-  ctx.arc(x + w / 2, y + h * 0.46, Math.min(w, h) * 0.16, 0, Math.PI * 2);
-  ctx.stroke();
 }
 
 function formatDate(date = new Date()) {
@@ -52,9 +48,9 @@ function drawPaper(ctx, w, h) {
   ctx.fillRect(0, 0, w, h);
 
   const washes = [
-    [w * 0.18, h * 0.12, w * 0.5, 'rgba(243, 217, 164, 0.32)'],
-    [w * 0.86, h * 0.3, w * 0.46, 'rgba(240, 183, 160, 0.26)'],
-    [w * 0.3, h * 0.88, w * 0.56, 'rgba(147, 169, 141, 0.24)']
+    [w * 0.18, h * 0.12, w * 0.5, 'rgba(243, 217, 164, 0.3)'],
+    [w * 0.86, h * 0.3, w * 0.46, 'rgba(240, 183, 160, 0.24)'],
+    [w * 0.3, h * 0.88, w * 0.56, 'rgba(147, 169, 141, 0.22)']
   ];
   for (const [x, y, r, color] of washes) {
     const grad = ctx.createRadialGradient(x, y, 0, x, y, r);
@@ -66,21 +62,16 @@ function drawPaper(ctx, w, h) {
 
   ctx.save();
   ctx.globalAlpha = 0.05;
-  ctx.globalCompositeOperation = 'multiply';
-  for (let i = 0; i < 2600; i += 1) {
+  for (let i = 0; i < 2200; i += 1) {
     const x = Math.random() * w;
     const y = Math.random() * h;
-    const r = Math.random() * 1.6 + 0.4;
+    const r = Math.random() * 1.5 + 0.4;
     ctx.fillStyle = Math.random() > 0.5 ? '#7d7466' : '#c9bda6';
     ctx.beginPath();
     ctx.arc(x, y, r, 0, Math.PI * 2);
     ctx.fill();
   }
   ctx.restore();
-
-  ctx.strokeStyle = 'rgba(91, 86, 76, 0.18)';
-  ctx.lineWidth = 2;
-  ctx.strokeRect(38, 38, w - 76, h - 76);
 }
 
 function archPath(ctx, x, y, w, h) {
@@ -100,12 +91,12 @@ function drawImageContained(ctx, img, x, y, w, h) {
   ctx.drawImage(img, x + (w - dw) / 2, y + (h - dh) / 2, dw, dh);
 }
 
-function wrapText(ctx, text, x, y, maxWidth, lineHeight, maxLines = 3) {
+function wrapText(ctx, text, x, y, maxWidth, lineHeight, maxLines = 2) {
   const chars = [...text];
   const lines = [];
   let current = '';
   for (const ch of chars) {
-    if (ctx.measureText(current + ch).width > maxWidth) {
+    if (current && ctx.measureText(current + ch).width > maxWidth) {
       lines.push(current);
       current = ch;
       if (lines.length === maxLines) break;
@@ -114,29 +105,19 @@ function wrapText(ctx, text, x, y, maxWidth, lineHeight, maxLines = 3) {
     }
   }
   if (lines.length < maxLines && current) lines.push(current);
-  lines.forEach((line, i) => {
-    ctx.fillText(line, x, y + i * lineHeight);
-  });
+  lines.forEach((line, i) => ctx.fillText(line, x, y + i * lineHeight));
   return lines.length;
 }
 
-function drawHeader(ctx, gardenName, kicker) {
+function drawTop(ctx, gardenName) {
   ctx.textAlign = 'left';
-  ctx.fillStyle = SAGE;
-  ctx.font = `500 26px ${SANS}`;
-  ctx.fillText(`${gardenName} · ${kicker}`, 96, 128);
-
+  ctx.fillStyle = INK;
+  ctx.font = `500 34px ${SERIF}`;
+  ctx.fillText(gardenName, 96, 132);
   ctx.textAlign = 'right';
   ctx.fillStyle = INK_SOFT;
   ctx.font = `400 24px ${SANS}`;
-  ctx.fillText(formatDate(), CARD_W - 96, 128);
-}
-
-function drawFooter(ctx, text) {
-  ctx.textAlign = 'center';
-  ctx.fillStyle = INK_SOFT;
-  ctx.font = `400 25px ${SANS}`;
-  ctx.fillText(text, CARD_W / 2, CARD_H - 96);
+  ctx.fillText(formatDate(), CARD_W - 96, 130);
 }
 
 async function createPlantCard(state, plant, stageName, days) {
@@ -146,12 +127,12 @@ async function createPlantCard(state, plant, stageName, days) {
   const ctx = canvas.getContext('2d');
 
   drawPaper(ctx, CARD_W, CARD_H);
-  drawHeader(ctx, state.gardenName, '正在生长');
+  drawTop(ctx, state.gardenName);
 
-  const frameX = 140;
-  const frameY = 210;
+  const frameX = 150;
+  const frameY = 208;
   const frameW = CARD_W - frameX * 2;
-  const frameH = 660;
+  const frameH = 700;
 
   ctx.save();
   archPath(ctx, frameX, frameY, frameW, frameH);
@@ -161,91 +142,75 @@ async function createPlantCard(state, plant, stageName, days) {
 
   const img = await tryLoadImage(plant.currentImage);
   if (img) {
-    ctx.globalCompositeOperation = 'multiply';
-    drawImageContained(ctx, img, frameX + 24, frameY + 60, frameW - 48, frameH - 96);
+    ctx.save();
+    ctx.shadowColor = 'rgba(120, 96, 70, 0.18)';
+    ctx.shadowBlur = 40;
+    ctx.shadowOffsetY = 24;
+    ctx.fillStyle = 'rgba(120, 96, 70, 0.1)';
+    ctx.beginPath();
+    ctx.ellipse(frameX + frameW / 2, frameY + frameH - 120, 150, 26, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+    drawImageContained(ctx, img, frameX + 40, frameY + 70, frameW - 80, frameH - 150);
   } else {
     drawSoftPlaceholder(ctx, frameX, frameY, frameW, frameH);
   }
   ctx.restore();
 
-  ctx.strokeStyle = 'rgba(91, 86, 76, 0.22)';
-  ctx.lineWidth = 2;
-  archPath(ctx, frameX, frameY, frameW, frameH);
-  ctx.stroke();
-
   ctx.textAlign = 'center';
   ctx.fillStyle = INK;
-  ctx.font = `600 62px ${SERIF}`;
-  ctx.fillText(plant.name, CARD_W / 2, 985);
+  ctx.font = `600 66px ${SERIF}`;
+  ctx.fillText(plant.name, CARD_W / 2, 1030);
 
   ctx.fillStyle = SAGE;
-  ctx.font = `400 30px ${SANS}`;
-  ctx.fillText(stageName, CARD_W / 2, 1036);
+  ctx.font = `400 32px ${SANS}`;
+  ctx.fillText(stageName, CARD_W / 2, 1084);
 
   ctx.fillStyle = INK_SOFT;
-  ctx.font = `400 26px ${SANS}`;
-  ctx.fillText(`已陪伴 ${days} 天`, CARD_W / 2, 1104);
+  ctx.font = `400 27px ${SANS}`;
+  ctx.fillText(`${days} 天`, CARD_W / 2, 1148);
 
-  ctx.fillStyle = 'rgba(91, 86, 76, 0.72)';
-  ctx.font = `400 27px ${SERIF}`;
-  ctx.fillText(`在「${state.gardenName}」里慢慢长大`, CARD_W / 2, 1170);
-
-  drawFooter(ctx, '把一点点照顾，种成可以吃的甜');
   return canvas;
 }
 
-async function createDishCard(state, dish, usedFruits, index) {
+async function createDishCard(state, dish, usedIds) {
   const canvas = document.createElement('canvas');
   canvas.width = CARD_W;
   canvas.height = CARD_H;
   const ctx = canvas.getContext('2d');
 
   drawPaper(ctx, CARD_W, CARD_H);
-  drawHeader(ctx, state.gardenName, '今日小甜');
+  drawTop(ctx, state.gardenName);
 
-  const frameX = 140;
-  const frameY = 200;
+  const frameX = 150;
+  const frameY = 206;
   const frameW = CARD_W - frameX * 2;
-  const frameH = 620;
+  const frameH = 700;
 
   ctx.save();
   archPath(ctx, frameX, frameY, frameW, frameH);
   ctx.clip();
   ctx.fillStyle = '#fffdf7';
   ctx.fillRect(frameX, frameY, frameW, frameH);
-  const img = await tryLoadImage(dish.image);
+
+  const uri = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(dishArt(dish, usedIds))}`;
+  const img = await tryLoadImage(uri);
   if (img) {
-    ctx.globalCompositeOperation = 'multiply';
-    drawImageContained(ctx, img, frameX + 16, frameY + 20, frameW - 32, frameH - 40);
+    drawImageContained(ctx, img, frameX + 60, frameY + 90, frameW - 120, frameH - 180);
   } else {
     drawSoftPlaceholder(ctx, frameX, frameY, frameW, frameH);
   }
   ctx.restore();
 
-  ctx.strokeStyle = 'rgba(91, 86, 76, 0.22)';
-  ctx.lineWidth = 2;
-  archPath(ctx, frameX, frameY, frameW, frameH);
-  ctx.stroke();
-
   ctx.textAlign = 'center';
   ctx.fillStyle = SAGE;
-  ctx.font = `400 26px ${SANS}`;
-  ctx.fillText(`${dish.type} · ${dish.tag}`, CARD_W / 2, 892);
+  ctx.font = `400 28px ${SANS}`;
+  ctx.fillText(dish.type, CARD_W / 2, 1034);
 
   ctx.fillStyle = INK;
   ctx.font = `600 58px ${SERIF}`;
-  wrapText(ctx, dish.name, CARD_W / 2, 968, CARD_W - 220, 74, 2);
+  wrapText(ctx, dish.name, CARD_W / 2, 1112, CARD_W - 240, 74, 2);
 
-  ctx.fillStyle = INK_SOFT;
-  ctx.font = `400 26px ${SANS}`;
-  wrapText(ctx, dish.desc, CARD_W / 2, 1084, CARD_W - 260, 40, 2);
-
-  const label = usedFruits.map((fruit) => fruit.name).join(' · ');
-  ctx.fillStyle = 'rgba(91, 86, 76, 0.7)';
-  ctx.font = `400 25px ${SANS}`;
-  ctx.fillText(label, CARD_W / 2, 1186);
-
-  drawFooter(ctx, `在「${state.gardenName}」里种出来的甜 · 第 ${index} 道料理`);
   return canvas;
 }
 
@@ -271,9 +236,7 @@ export function downloadCanvas(canvas, filename) {
 
 export async function shareCanvas(canvas, filename, caption) {
   const blob = await canvasToBlob(canvas);
-  if (!blob) {
-    return { ok: false, reason: '导出失败' };
-  }
+  if (!blob) return { ok: false, reason: '导出失败' };
 
   const file = new File([blob], filename, { type: 'image/jpeg' });
   if (navigator.canShare && navigator.canShare({ files: [file] })) {
@@ -281,9 +244,7 @@ export async function shareCanvas(canvas, filename, caption) {
       await navigator.share({ files: [file], title: caption, text: caption });
       return { ok: true, mode: 'share' };
     } catch (error) {
-      if (error && error.name === 'AbortError') {
-        return { ok: false, reason: 'cancel' };
-      }
+      if (error && error.name === 'AbortError') return { ok: false, reason: 'cancel' };
     }
   }
 
@@ -298,14 +259,14 @@ export async function shareCanvas(canvas, filename, caption) {
   return { ok: true, mode: 'download' };
 }
 
-export async function buildPlantCard({ state, plant, stageName, days, image }) {
-  const canvas = await createPlantCard(state, { ...plant, currentImage: image }, stageName, days);
+export async function buildPlantCard({ state, plant, stageName, days }) {
+  const canvas = await createPlantCard(state, plant, stageName, days);
   const filename = `${state.gardenName}-${plant.name}-${stageName}.jpg`;
   return { canvas, filename, caption: `${state.gardenName}｜${plant.name} · ${stageName}` };
 }
 
-export async function buildDishCard({ state, dish, usedFruits, index }) {
-  const canvas = await createDishCard(state, dish, usedFruits, index);
+export async function buildDishCard({ state, dish, usedFruits }) {
+  const canvas = await createDishCard(state, dish, usedFruits.map((fruit) => fruit.id));
   const filename = `${state.gardenName}-${dish.name}.jpg`;
-  return { canvas, filename, caption: `${state.gardenName}｜${dish.name} · ${dish.type}` };
+  return { canvas, filename, caption: `${state.gardenName}｜${dish.name}` };
 }
