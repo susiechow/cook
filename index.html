@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#EDE7DA">
+  <title>我的小园</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="page-glow" aria-hidden="true"></div>
+
+  <main class="widget" id="widget" aria-label="桌面植物挂件">
+    <header class="widget-head">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 21c0-6 2.5-9.5 7-11-1 5.5-3.4 8.6-7 9.6Z"/>
+            <path d="M12 21C12 14.5 9 11 4.5 10c.8 5.3 3.2 8.4 7.5 9.6Z"/>
+            <path d="M12 21v-4"/>
+          </svg>
+        </span>
+        <h1 class="brand-name" id="gardenTitle" title="点击重命名">我的小园</h1>
+        <button class="icon-btn" id="renameBtn" type="button" aria-label="重命名小园">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 20h4l10-10a2.4 2.4 0 0 0-3.4-3.4L4.6 16.6 4 20Z"/>
+            <path d="M14 6.6 17.4 10"/>
+          </svg>
+        </button>
+      </div>
+      <button class="basket-btn" id="basketBtn" type="button" aria-label="打开小仓库">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 9h16l-1.6 10.2a1.4 1.4 0 0 1-1.4 1.2H7a1.4 1.4 0 0 1-1.4-1.2L4 9Z"/>
+          <path d="M8 9 10.5 4M16 9 13.5 4M9.6 12.6v4.6M14.4 12.6v4.6"/>
+        </svg>
+        <span class="basket-badge" id="basketBadge">0</span>
+      </button>
+    </header>
+
+    <section class="scene" id="scene">
+      <div class="scene-light" aria-hidden="true"></div>
+      <div class="scene-window" aria-hidden="true"></div>
+      <div class="scene-table" aria-hidden="true"></div>
+
+      <div class="plant-wrap" id="plantWrap" hidden>
+        <img class="plant-img" id="plantImg" alt="" draggable="false">
+        <img class="pot-img" id="potImg" alt="" draggable="false">
+      </div>
+
+      <div class="stage-tag" id="stageTag" hidden>种子入土</div>
+      <div class="harvest-hint" id="harvestHint" hidden>快结果了，加油坚持</div>
+
+      <div class="focus-pill" id="focusPill" hidden>
+        <span class="focus-dot" aria-hidden="true"></span>
+        <span id="focusPillText">专注 25:00</span>
+      </div>
+
+      <div class="empty-state" id="emptyState" hidden>
+        <p class="empty-line1">这里还空着</p>
+        <p class="empty-line2">种一株会结果的小植物吧</p>
+        <button class="ghost-btn" id="emptyPlantBtn" type="button">选一株种下</button>
+      </div>
+
+      <div class="fx-layer" id="fxLayer" aria-hidden="true"></div>
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+      <!-- 园名输入 -->
+      <div class="rename-card" id="renameBar" hidden>
+        <label class="rename-label" for="renameInput">给这个小园取个名字</label>
+        <div class="rename-row">
+          <input id="renameInput" class="rename-input" maxlength="12" value="我的小园" autocomplete="off" spellcheck="false">
+          <button class="solid-btn rename-save" id="renameSave" type="button">就叫这个</button>
+        </div>
+        <p class="rename-tip">最多 12 个字，之后也可以随时改</p>
+        <button class="text-btn" id="renameSkip" type="button">先跳过</button>
+      </div>
+
+      <!-- 照顾面板 -->
+      <div class="sheet care-sheet" id="careSheet" hidden>
+        <div class="sheet-grip" aria-hidden="true"></div>
+        <div class="care-head">
+          <div>
+            <p class="care-eyebrow" id="carePlantName">草莓</p>
+            <h2 class="care-stage" id="careStage">种子入土</h2>
+          </div>
+          <button class="text-btn share-now" id="sharePlantBtn" type="button">分享这一刻</button>
+        </div>
+        <p class="care-whisper" id="careWhisper">今天也一起慢慢长大</p>
+
+        <div class="actions">
+          <div class="act" id="actWater" role="button" tabindex="0" aria-label="给它喝水">
+            <span class="act-ico water" aria-hidden="true">
+              <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 13h10l2.4 12.4a2 2 0 0 1-2 2.4h-10.8a2 2 0 0 1-2-2.4L10 13Z"/>
+                <path d="M10 13V9.4A3.4 3.4 0 0 1 13.4 6h3.2A3.4 3.4 0 0 1 20 9.4V13"/>
+                <path d="M22 10.6 27 8"/>
+                <path d="M26.4 7.2c.9.8 1 2 .2 2.9-.7.8-1.9.9-2.8.2"/>
+              </svg>
+            </span>
+            <span class="act-name">喝水</span>
+            <span class="act-note" id="waterNote">成长 +3%</span>
+          </div>
+
+          <div class="act" id="actFocus" role="button" tabindex="0" aria-label="一起专注">
+            <span class="act-ico focus" id="focusIco" aria-hidden="true">
+              <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="16" cy="17" r="9"/>
+                <path d="M16 12.4V17l3 1.8"/>
+                <path d="M13 5.6h6M16 5.6V8"/>
+              </svg>
+            </span>
+            <span class="act-name">专注陪伴</span>
+            <span class="act-note" id="focusNote">25:00 · +5%</span>
+          </div>
+
+          <div class="act" id="actSoil" role="button" tabindex="0" aria-label="起来动一动">
+            <span class="act-ico soil" aria-hidden="true">
+              <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 5v9"/>
+                <path d="M12.4 7.6h7.2"/>
+                <path d="M11.6 14h8.8l-1 3.4a3.6 3.6 0 0 1-3.4 2.5 3.6 3.6 0 0 1-3.4-2.5L11.6 14Z"/>
+                <path d="M16 20v7"/>
+                <path d="M13.6 24.4h4.8"/>
+              </svg>
+            </span>
+            <span class="act-name">动一动</span>
+            <span class="act-note" id="soilNote">成长 +3%</span>
+          </div>
+        </div>
+
+        <button class="solid-btn harvest-btn" id="harvestBtn" type="button" hidden>收获果实</button>
+        <button class="text-btn care-close" id="careClose" type="button">收起</button>
+      </div>
+
+      <!-- 选种 / 选盆 -->
+      <div class="sheet plant-sheet" id="plantSheet" hidden>
+        <div class="sheet-grip" aria-hidden="true"></div>
+        <div class="sheet-head">
+          <div>
+            <p class="care-eyebrow" id="plantStepNum">第 1 步 / 共 2 步</p>
+            <h2 class="sheet-title" id="plantSheetTitle">选一株想种的</h2>
+          </div>
+          <button class="icon-btn" id="plantBack" type="button" aria-label="上一步" hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14.5 5 7.5 12l7 7"/>
+            </svg>
+          </button>
+        </div>
+        <div class="seed-grid" id="seedGrid"></div>
+        <div class="pot-grid" id="potGrid" hidden></div>
+        <button class="solid-btn wide-btn" id="plantConfirm" type="button" disabled>下一步</button>
+        <p class="sheet-note" id="plantNote">果子成熟后会收进小仓库</p>
+      </div>
+
+      <!-- 小仓库 -->
+      <div class="sheet basket-sheet" id="basketSheet" hidden>
+        <div class="sheet-grip" aria-hidden="true"></div>
+        <div class="sheet-head">
+          <div>
+            <p class="care-eyebrow">小仓库</p>
+            <h2 class="sheet-title">收下来的果子</h2>
+          </div>
+          <button class="icon-btn" id="basketClose" type="button" aria-label="关闭仓库">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m6 6 12 12M18 6 6 18"/>
+            </svg>
+          </button>
+        </div>
+        <div class="inventory-grid" id="inventoryGrid"></div>
+        <div class="picked-row">
+          <span class="picked-label">已选</span>
+          <div class="picked-chips" id="pickedChips"></div>
+        </div>
+        <button class="solid-btn wide-btn" id="cookBtn" type="button" disabled>开始烹饪</button>
+        <p class="sheet-note" id="basketNote">任选 1–3 种，看看会做出什么</p>
+      </div>
+
+      <!-- 成品 -->
+      <div class="sheet dish-sheet" id="dishSheet" hidden>
+        <div class="sheet-grip" aria-hidden="true"></div>
+        <div class="dish-figure">
+          <img id="dishImg" alt="" draggable="false">
+        </div>
+        <p class="dish-type" id="dishType">甜品 · 治愈</p>
+        <h2 class="dish-title" id="dishName"></h2>
+        <p class="dish-desc" id="dishDesc"></p>
+        <div class="dish-used" id="dishUsed"></div>
+        <div class="dish-actions">
+          <button class="ghost-btn" id="dishShare" type="button">生成分享图</button>
+          <button class="solid-btn" id="dishAccept" type="button">收下</button>
+        </div>
+      </div>
+
+      <!-- 分享预览 -->
+      <div class="share-sheet" id="shareSheet" hidden>
+        <div class="share-head">
+          <p class="share-title">分享图</p>
+          <button class="icon-btn" id="shareClose" type="button" aria-label="关闭分享">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m6 6 12 12M18 6 6 18"/>
+            </svg>
+          </button>
+        </div>
+        <div class="share-preview" id="sharePreview"><p class="share-loading">正在装盘…</p></div>
+        <p class="share-caption" id="shareCaption"></p>
+        <div class="share-actions">
+          <button class="ghost-btn" id="shareSave" type="button">保存图片</button>
+          <button class="solid-btn" id="shareSend" type="button">分享</button>
+        </div>
+        <button class="text-btn share-back" id="shareBack" type="button">返回</button>
+      </div>
+
+      <!-- 烹饪动画 -->
+      <div class="cook-overlay" id="cookOverlay" hidden>
+        <div class="cook-inner">
+          <div class="cook-art" aria-hidden="true">
+            <div class="cook-bowl">
+              <span class="cook-fruit f1"></span>
+              <span class="cook-fruit f2"></span>
+              <span class="cook-fruit f3"></span>
+            </div>
+            <div class="cook-steam"><i></i><i></i><i></i></div>
+          </div>
+          <p class="cook-text" id="cookText">把果子洗干净…</p>
+          <div class="cook-bar"><span id="cookBarFill"></span></div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="widget-foot">
+      <p class="tip" id="tipText">今天也一起慢慢长大</p>
+    </footer>
+  </main>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
