@@ -43,7 +43,7 @@ function normalizeState(raw) {
           progress: Math.max(0, Math.min(100, Number(plant.progress) || 0)),
           pos: {
             x: Number(plant.pos?.x) || 50,
-            y: Number(plant.pos?.y) || 56
+            y: Number(plant.pos?.y) || 18
           },
           plantedAt: Number(plant.plantedAt) || Date.now()
         }

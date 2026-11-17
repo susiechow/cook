@@ -17,7 +17,7 @@ export const STAGE_TITLES = [
   '成熟待收'
 ];
 
-export const STAGE_SCALES = [0.62, 0.7, 0.78, 0.86, 0.94, 1, 1.02, 1.04, 1.05, 1.06];
+export const STAGE_SCALES = [0.72, 0.75, 0.79, 0.83, 0.87, 0.9, 0.93, 0.96, 0.98, 1];
 
 const sharedStages = {
   seed: `${SHARED}seed.jpg`,
