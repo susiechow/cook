@@ -254,25 +254,42 @@ button {
   bottom: calc(var(--pot-h) - 50px);
   transform: translateX(-50%);
   transform-origin: 50% 100%;
-  animation: sway var(--sway-dur, 5.4s) ease-in-out infinite;
+  animation: sway var(--sway-dur, 7.4s) ease-in-out infinite;
   will-change: transform;
   z-index: 2;
 }
 
 .plant-sway.gust {
-  animation: gust 0.95s ease-in-out;
+  animation: gust 1.5s ease-in-out;
 }
 
 @keyframes sway {
-  0%, 100% { transform: translateX(-50%) rotate(-0.9deg); }
-  50% { transform: translateX(-50%) rotate(1.1deg); }
+  0%, 100% { transform: translateX(-50%) rotate(-0.32deg); }
+  50% { transform: translateX(-50%) rotate(0.42deg); }
 }
 
 @keyframes gust {
   0%, 100% { transform: translateX(-50%) rotate(0deg); }
-  22% { transform: translateX(-50%) rotate(-2.6deg); }
-  58% { transform: translateX(-50%) rotate(2deg); }
-  82% { transform: translateX(-50%) rotate(-0.8deg); }
+  30% { transform: translateX(-50%) rotate(-1.15deg); }
+  62% { transform: translateX(-50%) rotate(0.95deg); }
+  82% { transform: translateX(-50%) rotate(-0.4deg); }
+}
+
+.wind-mote {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50% 0 50% 50%;
+  background: rgba(147, 169, 141, 0.55);
+  opacity: 0;
+  animation: mote-drift var(--dur, 4.6s) linear forwards;
+}
+
+@keyframes mote-drift {
+  0% { opacity: 0; transform: translate(0, 0) rotate(0deg); }
+  15% { opacity: 0.7; }
+  70% { opacity: 0.5; }
+  100% { opacity: 0; transform: translate(var(--dx, 140px), var(--dy, -26px)) rotate(150deg); }
 }
 
 .plant-img {

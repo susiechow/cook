@@ -306,11 +306,29 @@ function spawnPetals(count = 4) {
   }
 }
 
+function spawnWind() {
+  const box = sceneBox();
+  const count = 4 + Math.floor(Math.random() * 3);
+  for (let i = 0; i < count; i += 1) {
+    const mote = document.createElement('span');
+    mote.className = 'wind-mote';
+    mote.style.left = `${8 + Math.random() * 46}px`;
+    mote.style.top = `${64 + Math.random() * (box.height * 0.56)}px`;
+    mote.style.setProperty('--dx', `${90 + Math.random() * 130}px`);
+    mote.style.setProperty('--dy', `${-34 + Math.random() * 52}px`);
+    mote.style.setProperty('--dur', `${3.4 + Math.random() * 2.2}s`);
+    mote.style.animationDelay = `${i * 0.16}s`;
+    dom.fxLayer.appendChild(mote);
+    setTimeout(() => mote.remove(), 7200);
+  }
+}
+
 function gust() {
   if (dom.plantStage.hidden) return;
-  dom.plantSway.style.setProperty('--sway-dur', `${(3.6 + Math.random() * 3).toFixed(1)}s`);
+  dom.plantSway.style.setProperty('--sway-dur', `${(6.4 + Math.random() * 3).toFixed(1)}s`);
   dom.plantSway.classList.add('gust');
-  setTimeout(() => dom.plantSway.classList.remove('gust'), 980);
+  spawnWind();
+  setTimeout(() => dom.plantSway.classList.remove('gust'), 1500);
 }
 
 function scheduleIdle() {
