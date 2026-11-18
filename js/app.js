@@ -195,6 +195,8 @@ function renderScene() {
   const src = def.stages[index];
   const changed = dom.plantImg.dataset.stage !== String(index);
 
+  dom.plantSway.style.display = index === 0 ? 'none' : '';
+
   if (changed && dom.plantImg.src) {
     dom.plantImg.classList.add('swapping');
     setTimeout(() => {
