@@ -41,6 +41,7 @@ export const PLANTS = [
     id: 'strawberry',
     name: '草莓',
     fruitLabel: '草莓',
+    ready: true,
     tone: '#e2625a',
     fruitImage: `${FRUIT_ROOT}strawberry.svg`,
     stages: [
@@ -55,6 +56,7 @@ export const PLANTS = [
     id: 'apple',
     name: '苹果',
     fruitLabel: '苹果',
+    ready: true,
     tone: '#d9705a',
     fruitImage: `${FRUIT_ROOT}apple.svg`,
     stages: [
@@ -71,6 +73,7 @@ export const PLANTS = [
     id: 'guava',
     name: '芭乐',
     fruitLabel: '芭乐',
+    ready: true,
     tone: '#c9d492',
     fruitImage: `${FRUIT_ROOT}guava.svg`,
     stages: [
@@ -87,6 +90,7 @@ export const PLANTS = [
     id: 'lemon',
     name: '柠檬',
     fruitLabel: '柠檬',
+    ready: false,
     tone: '#e6c452',
     fruitImage: `${FRUIT_ROOT}lemon.svg`,
     stages: [
@@ -106,6 +110,7 @@ export const PLANTS = [
     id: 'blueberry',
     name: '蓝莓',
     fruitLabel: '蓝莓',
+    ready: false,
     tone: '#6c7cb0',
     fruitImage: `${FRUIT_ROOT}blueberry.svg`,
     stages: [
@@ -124,6 +129,8 @@ export const PLANTS = [
 ];
 
 export const PLANTS_BY_ID = Object.fromEntries(PLANTS.map((p) => [p.id, p]));
+
+export const AVAILABLE_PLANTS = PLANTS.filter((plant) => plant.ready);
 
 export const POTS = [
   { id: 'cream', name: '奶油白陶', image: `${POT_ROOT}pot-cream.svg` },
