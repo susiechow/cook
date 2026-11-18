@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 190" width="200" height="190">
+  <defs>
+    <linearGradient id="rim" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#eeb995"/>
+      <stop offset="1" stop-color="#c07d57"/>
+    </linearGradient>
+    <linearGradient id="soilFront" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6d4d34"/>
+      <stop offset="1" stop-color="#4a3323"/>
+    </linearGradient>
+  </defs>
+  <path d="M40 58a60 15 0 0 0 120 0Z" fill="url(#rim)"/>
+  <path d="M50 59a50 10.5 0 0 0 100 0Z" fill="url(#soilFront)"/>
+  <path d="M40 58a60 15 0 0 0 120 0" fill="none" stroke="#8d5f43" stroke-width="2.4"/>
+</svg>

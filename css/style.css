@@ -251,12 +251,12 @@ button {
 .plant-sway {
   position: absolute;
   left: 50%;
-  bottom: calc(var(--pot-h) - 46px);
+  bottom: calc(var(--pot-h) - 50px);
   transform: translateX(-50%);
   transform-origin: 50% 100%;
   animation: sway var(--sway-dur, 5.4s) ease-in-out infinite;
   will-change: transform;
-  z-index: 1;
+  z-index: 2;
 }
 
 .plant-sway.gust {
@@ -297,10 +297,23 @@ button {
   width: var(--pot-w);
   height: auto;
   transform: translateX(-50%);
-  z-index: 2;
+  z-index: 1;
   user-select: none;
   -webkit-user-drag: none;
   filter: drop-shadow(0 14px 16px rgba(90, 74, 52, 0.18));
+}
+
+.pot-front {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: var(--pot-w);
+  height: auto;
+  transform: translateX(-50%);
+  z-index: 3;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
 .seed-cta {

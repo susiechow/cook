@@ -33,6 +33,7 @@ const dom = {
   plantSway: $('plantSway'),
   plantImg: $('plantImg'),
   potImg: $('potImg'),
+  potFrontImg: $('potFrontImg'),
   stageTag: $('stageTag'),
   harvestHint: $('harvestHint'),
   focusPill: $('focusPill'),
@@ -210,7 +211,9 @@ function renderScene() {
   dom.plantImg.style.width = `${Math.round(PLANT_BASE_W * STAGE_SCALES[index])}px`;
   dom.plantImg.setAttribute('data-plant', def.id);
 
-  dom.potImg.src = POTS_BY_ID[state.plant.potId]?.image || POTS[0].image;
+  const potDef = POTS_BY_ID[state.plant.potId] || POTS[0];
+  dom.potImg.src = potDef.image;
+  dom.potFrontImg.src = potDef.front;
 
   dom.stageTag.textContent = STAGE_TITLES[index];
   dom.harvestHint.hidden = !(state.plant.progress > 85 && state.plant.progress < 100);

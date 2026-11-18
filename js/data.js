@@ -133,9 +133,9 @@ export const PLANTS_BY_ID = Object.fromEntries(PLANTS.map((p) => [p.id, p]));
 export const AVAILABLE_PLANTS = PLANTS.filter((plant) => plant.ready);
 
 export const POTS = [
-  { id: 'cream', name: '奶油白陶', image: `${POT_ROOT}pot-cream.svg` },
-  { id: 'terracotta', name: '赤陶暖盆', image: `${POT_ROOT}pot-terracotta.svg` },
-  { id: 'celadon', name: '青釉瓷盆', image: `${POT_ROOT}pot-celadon.svg` }
+  { id: 'cream', name: '奶油白陶', image: `${POT_ROOT}pot-cream.svg`, front: `${POT_ROOT}pot-front-cream.svg` },
+  { id: 'terracotta', name: '赤陶暖盆', image: `${POT_ROOT}pot-terracotta.svg`, front: `${POT_ROOT}pot-front-terracotta.svg` },
+  { id: 'celadon', name: '青釉瓷盆', image: `${POT_ROOT}pot-celadon.svg`, front: `${POT_ROOT}pot-front-celadon.svg` }
 ];
 
 export const POTS_BY_ID = Object.fromEntries(POTS.map((p) => [p.id, p]));
