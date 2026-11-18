@@ -1,4 +1,4 @@
-import { PLANTS, PLANTS_BY_ID, POTS, POTS_BY_ID, FRUITS, STAGE_TITLES, STAGE_SCALES } from './data.js';
+import { PLANTS_BY_ID, AVAILABLE_PLANTS, POTS, POTS_BY_ID, FRUITS, STAGE_TITLES, STAGE_SCALES } from './data.js';
 import {
   stageIndex,
   addGrowth,
@@ -536,7 +536,7 @@ function renderPlantSheet() {
 
 function buildLists() {
   dom.seedList.innerHTML = '';
-  for (const plant of PLANTS) {
+  for (const plant of AVAILABLE_PLANTS) {
     const item = document.createElement('button');
     item.type = 'button';
     item.className = 'seed-item';
@@ -620,7 +620,7 @@ function openBasket() {
 
 function renderBasket() {
   dom.invList.innerHTML = '';
-  for (const plant of PLANTS) {
+  for (const plant of AVAILABLE_PLANTS) {
     const count = state.inventory[plant.id] || 0;
     const item = document.createElement('button');
     item.type = 'button';
